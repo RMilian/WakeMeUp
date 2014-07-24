@@ -15,5 +15,10 @@
 + (instancetype) sharedDataStore;
 - (void)save;
 
-
+-(void)addLocationWithName:(NSString*)name
+             StreetAddress:(NSString*)streetAddress
+                      City:(NSString*)city
+                   Country:(NSString*)country
+                  Latitude:(float)latitude
+                 Longitude:(float)longitude;
 @end

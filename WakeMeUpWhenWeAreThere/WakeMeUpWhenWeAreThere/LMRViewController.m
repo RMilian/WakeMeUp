@@ -8,20 +8,27 @@
 
 #import "LMRViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "LMRDataStore.h"
 
 @interface LMRViewController ()
 
-@property (nonatomic, strong) CLGeocoder *geocoder;
 
+@property (strong, nonatomic) LMRDataStore *store;
+@property (nonatomic, strong) CLGeocoder *geocoder;
+@property (nonatomic) float latitude;
+@property (nonatomic) float longitude;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UITextField *streetField;
 @property (nonatomic, weak) IBOutlet UITextField *cityField;
 @property (nonatomic, weak) IBOutlet UITextField *countryField;
 @property (nonatomic, weak) IBOutlet UIButton *fetchCoordinatesButton;
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *coordinatesLabel;
+
 
 - (IBAction)fetchCoordinates:(id)sender;
-
+- (IBAction)saveButtonTapped:(id)sender;
 
 @end
 
@@ -30,7 +37,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    self.store = [LMRDataStore sharedDataStore];
+    self.nameField.delegate = self;
+    self.streetField.delegate = self;
+    self.cityField.delegate = self;
+    self.countryField.delegate = self;
+    self.mapView.delegate = self;
+ 
+    self.mapView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,23 +61,49 @@ if (!self.geocoder)
     NSString *address = [NSString stringWithFormat:@"%@ %@ %@", self.streetField.text, self.cityField.text, self.countryField.text];
     
     [self.geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        if ([placemarks count] > 0) {
+        if (error)NSLog(@"Error = %@",error.localizedDescription);
+        if ([placemarks count] > 0)
+        {
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             CLLocation *location = placemark.location;
             CLLocationCoordinate2D coordinate = location.coordinate;
             
-            self.coordinatesLabel.text = [NSString stringWithFormat:@"%f, %f", coordinate.latitude, coordinate.longitude];
+            self.latitude = coordinate.latitude;
+            self.longitude = coordinate.longitude;
+            [self displayLocation];
             
-            if ([placemark.areasOfInterest count] > 0) {
-                NSString *areaOfInterest = [placemark.areasOfInterest objectAtIndex:0];
-                self.nameLabel.text = areaOfInterest;
-            } else {
-                self.nameLabel.text = @"No Area of Interest Was Found";
-            }
         }
     }];
     [self resignFirstResponder];
+}
 
+- (IBAction)saveButtonTapped:(id)sender
+{
+    [self.store addLocationWithName:self.nameField.text
+                      StreetAddress:self.streetField.text
+                               City:self.cityField.text
+                            Country:self.countryField.text
+                           Latitude:self.latitude
+                          Longitude:self.longitude];
+}
+
+-(void)displayLocation
+{
+    [self.view endEditing:YES];
+    [self.countryField resignFirstResponder];
+    [self.cityField resignFirstResponder];
+    [self.nameField resignFirstResponder];
+    [self.streetField resignFirstResponder];
+    self.mapView.hidden = NO;
+    CLLocationCoordinate2D location2d = CLLocationCoordinate2DMake(self.latitude,self.longitude);
+    MKCoordinateRegion locationRegion = MKCoordinateRegionMakeWithDistance(location2d, 10000, 10000);
+    [self.mapView setRegion:locationRegion animated:YES];
+    
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = location2d;
+    point.title = self.nameField.text;
+    [self.mapView addAnnotation:point];
+    
 }
 
 @end

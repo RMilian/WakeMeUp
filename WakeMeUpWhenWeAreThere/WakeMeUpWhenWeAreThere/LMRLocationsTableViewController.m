@@ -8,6 +8,7 @@
 
 #import "LMRLocationsTableViewController.h"
 #import "LMRDataStore.h"
+#import "Location.h"
 
 @interface LMRLocationsTableViewController ()
 
@@ -34,6 +35,13 @@
     self.resultsController.delegate = self;
     [self configureResultController];
     [self.resultsController performFetch:nil];
+    [self.tableView reloadData];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self.resultsController performFetch:nil];
+    [self.tableView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,11 +68,16 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    
+    Location *currentLocation = [self.resultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = currentLocation.name;
     
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -117,15 +130,16 @@
 
 -(void)configureResultController
 {
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Message"];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Location"];
     
-    NSSortDescriptor *alphaSort = [NSSortDescriptor sortDescriptorWithKey:@"Name" ascending:YES];
+    NSSortDescriptor *alphaSort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[alphaSort];
 
     self.resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                  managedObjectContext:self.store.managedObjectContext
                                                                    sectionNameKeyPath:nil
                                                                             cacheName:nil];
+    [self.resultsController performFetch:nil];
 }
 
 @end

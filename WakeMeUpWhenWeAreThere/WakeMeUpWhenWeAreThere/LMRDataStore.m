@@ -8,6 +8,7 @@
 
 #import "LMRDataStore.h"
 #import <CoreData/CoreData.h>
+#import "Location.h"
 
 @implementation LMRDataStore
 
@@ -50,7 +51,7 @@
     
     NSError *error = nil;
     
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"LMRDataStore" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
     NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
     
@@ -69,6 +70,25 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+-(void)addLocationWithName:(NSString*)name
+             StreetAddress:(NSString*)streetAddress
+                      City:(NSString*)city
+                   Country:(NSString*)country
+                  Latitude:(float)latitude
+                 Longitude:(float)longitude
+{
+    Location *newLocation = [NSEntityDescription insertNewObjectForEntityForName:@"Location"
+                                                        inManagedObjectContext:self.managedObjectContext];
+    
+    newLocation.name = name;
+    newLocation.streetAddress = streetAddress;
+    newLocation.city = city;
+    newLocation.country = country;
+    newLocation.latitude = [NSNumber numberWithFloat:latitude];
+    newLocation.longitude = [NSNumber numberWithFloat:longitude];
+    
+    [self save];
+}
 
 
 @end

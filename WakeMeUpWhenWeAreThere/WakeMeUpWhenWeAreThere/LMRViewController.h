@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface LMRViewController : UIViewController
-
-
-
+@interface LMRViewController : UIViewController <MKMapViewDelegate, UITextFieldDelegate>
 
 @end
