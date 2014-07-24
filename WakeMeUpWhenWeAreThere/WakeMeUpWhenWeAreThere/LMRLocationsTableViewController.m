@@ -9,6 +9,7 @@
 #import "LMRLocationsTableViewController.h"
 #import "LMRDataStore.h"
 #import "Location.h"
+#import "LMRGeoFencer.h"
 
 @interface LMRLocationsTableViewController ()
 
@@ -77,6 +78,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
+    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
+    [fencer setupFenceWithLocation:selectedLocation];
 }
 
 /*

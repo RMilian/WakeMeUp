@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface LMRDataStore : NSObject
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLRegion *geofence;
+@property (nonatomic) BOOL didStartMonitoring;
 
 + (instancetype) sharedDataStore;
 - (void)save;

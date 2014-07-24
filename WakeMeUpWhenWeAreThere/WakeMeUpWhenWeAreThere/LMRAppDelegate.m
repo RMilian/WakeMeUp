@@ -7,12 +7,17 @@
 //
 
 #import "LMRAppDelegate.h"
+#import "LMRDataStore.h"
 
 @implementation LMRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.store = [LMRDataStore sharedDataStore];
+    self.store.locationManager = [[CLLocationManager alloc]init];
+    
+    
     return YES;
 }
 							

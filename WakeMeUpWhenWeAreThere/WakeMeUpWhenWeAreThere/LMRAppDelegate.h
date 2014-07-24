@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LMRDataStore;
 
 @interface LMRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) LMRDataStore *store;
 
 @end

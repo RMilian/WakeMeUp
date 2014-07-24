@@ -240,6 +240,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Leo Reubelt";
 				TargetAttributes = {
+					71378FD019802ACF006AAB8E = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					71378FF119802ACF006AAB8E = {
 						TestTargetID = 71378FD019802ACF006AAB8E;
 					};

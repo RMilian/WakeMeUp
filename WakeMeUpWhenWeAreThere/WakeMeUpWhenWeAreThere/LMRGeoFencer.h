@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LMRDataStore.h"
+
+@class Location;
 
 @interface LMRGeoFencer : NSObject <CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLRegion *geofence;
+
+@property (strong, nonatomic) LMRDataStore *store;
+
+-(void)setupFenceWithLocation:(Location*)location;
 
 @end
