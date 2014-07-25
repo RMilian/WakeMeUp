@@ -20,9 +20,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="drz-pD-YHP" kind="push" id="9eG-YZ-SL5"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
