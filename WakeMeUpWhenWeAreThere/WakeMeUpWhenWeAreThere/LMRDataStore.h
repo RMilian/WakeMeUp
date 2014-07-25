@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLRegion *geofence;
+@property (strong, nonatomic) CLCircularRegion *geofence;
 @property (nonatomic) BOOL didStartMonitoring;
 
 + (instancetype) sharedDataStore;

@@ -77,9 +77,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
-    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
-    [fencer setupFenceWithLocation:selectedLocation];
+//    Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
+//    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
+//    [fencer setupFenceWithLocation:selectedLocation];
+    
 }
 
 /*
@@ -120,16 +121,18 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
+    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
+    [fencer setupFenceWithLocation:selectedLocation];
 }
-*/
+
 
 -(void)configureResultController
 {

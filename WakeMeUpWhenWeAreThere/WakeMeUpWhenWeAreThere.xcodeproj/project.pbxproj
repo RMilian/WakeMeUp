@@ -25,6 +25,7 @@
 		7137900C19802B6B006AAB8E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7137900B19802B6B006AAB8E /* CoreData.framework */; };
 		714A83DB198124E2006A6361 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 714A83D9198124E2006A6361 /* Model.xcdatamodeld */; };
 		714A83DE19812564006A6361 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 714A83DD19812564006A6361 /* Location.m */; };
+		7152640219826B1E00350360 /* LMRMonitoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7152640119826B1E00350360 /* LMRMonitoringViewController.m */; };
 		717934821981312A005FE379 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 717934811981312A005FE379 /* MapKit.framework */; };
 		71E74D171981169D00FFAF36 /* LMRGeoCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D161981169D00FFAF36 /* LMRGeoCoder.m */; };
 		71E74D1A198116B800FFAF36 /* LMRGeoFencer.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D19198116B800FFAF36 /* LMRGeoFencer.m */; };
@@ -67,6 +68,8 @@
 		714A83DA198124E2006A6361 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		714A83DC19812564006A6361 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		714A83DD19812564006A6361 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		7152640019826B1E00350360 /* LMRMonitoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRMonitoringViewController.h; sourceTree = "<group>"; };
+		7152640119826B1E00350360 /* LMRMonitoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRMonitoringViewController.m; sourceTree = "<group>"; };
 		717934811981312A005FE379 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		71E74D151981169D00FFAF36 /* LMRGeoCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRGeoCoder.h; sourceTree = "<group>"; };
 		71E74D161981169D00FFAF36 /* LMRGeoCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRGeoCoder.m; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				71378FE319802ACF006AAB8E /* LMRAppDelegate.h */,
 				71378FE419802ACF006AAB8E /* LMRAppDelegate.m */,
 				71378FE619802ACF006AAB8E /* Main.storyboard */,
+				7152640019826B1E00350360 /* LMRMonitoringViewController.h */,
+				7152640119826B1E00350360 /* LMRMonitoringViewController.m */,
 				71378FE919802ACF006AAB8E /* LMRViewController.h */,
 				71378FEA19802ACF006AAB8E /* LMRViewController.m */,
 				71E74D1E19811F3800FFAF36 /* LMRLocationsTableViewController.h */,
@@ -297,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7152640219826B1E00350360 /* LMRMonitoringViewController.m in Sources */,
 				71378FE519802ACF006AAB8E /* LMRAppDelegate.m in Sources */,
 				71E74D1D198116CB00FFAF36 /* LMRDataStore.m in Sources */,
 				71378FE119802ACF006AAB8E /* main.m in Sources */,

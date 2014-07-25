@@ -16,8 +16,23 @@
     // Override point for customization after application launch.
     self.store = [LMRDataStore sharedDataStore];
     self.store.locationManager = [[CLLocationManager alloc]init];
-    
-    
+    if(![CLLocationManager locationServicesEnabled])
+    {
+        //You need to enable Location Services
+        NSLog(@"Location Services not Enabled");
+    }
+    if(![CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]])
+    {
+        //Region monitoring is not available for this Class;
+        NSLog(@"Region monitoring not available not Enabled");
+    }
+    if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted  )
+    {
+        NSLog(@"App Not Authorized");
+        //You need to authorize Location Services for the APP
+    }
+
     return YES;
 }
 							
