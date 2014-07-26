@@ -20,6 +20,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="drz-pD-YHP" kind="modal" identifier="monitorSegue" id="0gV-GH-r3u"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -30,7 +33,7 @@
                     <navigationItem key="navigationItem" id="hDV-US-C1m">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DTC-bd-Tfy">
                             <connections>
-                                <segue destination="vXZ-lx-hvc" kind="push" id="09C-xj-2lg"/>
+                                <segue destination="vXZ-lx-hvc" kind="push" identifier="addSegue" id="09C-xj-2lg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -51,13 +54,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDm-sa-8lJ">
-                                <rect key="frame" x="20" y="286" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ko9-V3-TmV">
                                 <rect key="frame" x="137" y="315" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,13 +75,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="pH5-Ku-pxr"/>
                     <connections>
-                        <outlet property="locationLabel" destination="ZDm-sa-8lJ" id="LNs-9g-MZd"/>
                         <outlet property="myLocationLabel" destination="wEW-1e-oQ8" id="FBo-zx-TEW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMO-AD-QKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="720" y="-615"/>
+            <point key="canvasLocation" x="959" y="-619"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -174,11 +169,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cityField" destination="Q3K-lm-CNS" id="JtT-Jd-eOD"/>
-                        <outlet property="countryField" destination="ZFE-90-SRd" id="1hS-QD-Chy"/>
                         <outlet property="fetchCoordinatesButton" destination="iFG-F0-GeF" id="LyL-Tk-1ol"/>
                         <outlet property="mapView" destination="Wgb-dP-gHN" id="a1M-Si-GAa"/>
                         <outlet property="nameField" destination="G0B-54-yrb" id="7zR-fo-yMN"/>
                         <outlet property="streetField" destination="odR-Ac-dR0" id="3C0-Pi-sv9"/>
+                        <outlet property="zipCodeField" destination="ZFE-90-SRd" id="A5Y-H8-Nc6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

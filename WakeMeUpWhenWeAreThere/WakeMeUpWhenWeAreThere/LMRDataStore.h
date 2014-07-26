@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "LMRGeoFencer.h"
 
+
 @interface LMRDataStore : NSObject
 
 @property (strong, nonatomic) LMRGeoFencer *geoFenceManager;
@@ -22,8 +23,8 @@
 -(void)addLocationWithName:(NSString*)name
              StreetAddress:(NSString*)streetAddress
                       City:(NSString*)city
-                   ZipCode:(NSString*)zipCode
+                   Zipcode:(NSString*)zipCode
                   Latitude:(float)latitude
                  Longitude:(float)longitude
-                    Radius:(NSNumber*)radius;
+                    Radius:(NSNumber *)radius;
 @end

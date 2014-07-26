@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UITextField *streetField;
 @property (nonatomic, weak) IBOutlet UITextField *cityField;
-@property (nonatomic, weak) IBOutlet UITextField *countryField;
+@property (nonatomic, weak) IBOutlet UITextField *zipCodeField;
 @property (nonatomic, weak) IBOutlet UIButton *fetchCoordinatesButton;
 
 
@@ -41,7 +41,7 @@
     self.nameField.delegate = self;
     self.streetField.delegate = self;
     self.cityField.delegate = self;
-    self.countryField.delegate = self;
+    self.zipCodeField.delegate = self;
     self.mapView.delegate = self;
  
     self.mapView.hidden = YES;
@@ -58,7 +58,7 @@ if (!self.geocoder)
     {
     self.geocoder = [[CLGeocoder alloc] init];
     }
-    NSString *address = [NSString stringWithFormat:@"%@ %@ %@", self.streetField.text, self.cityField.text, self.countryField.text];
+    NSString *address = [NSString stringWithFormat:@"%@ %@ %@", self.streetField.text, self.cityField.text, self.zipCodeField.text];
     
     [self.geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error)NSLog(@"Error = %@",error.localizedDescription);
@@ -79,22 +79,24 @@ if (!self.geocoder)
 
 - (IBAction)saveButtonTapped:(id)sender
 {
+    
     [self.store addLocationWithName:self.nameField.text
                       StreetAddress:self.streetField.text
                                City:self.cityField.text
-                            Country:self.countryField.text
+                            Zipcode:self.zipCodeField.text
                            Latitude:self.latitude
-                          Longitude:self.longitude];
+                          Longitude:self.longitude Radius:@100];
 }
 
 -(void)displayLocation
 {
     [self.view endEditing:YES];
-    [self.countryField resignFirstResponder];
+    [self.zipCodeField resignFirstResponder];
     [self.cityField resignFirstResponder];
     [self.nameField resignFirstResponder];
     [self.streetField resignFirstResponder];
     self.mapView.hidden = NO;
+    
     CLLocationCoordinate2D location2d = CLLocationCoordinate2DMake(self.latitude,self.longitude);
     MKCoordinateRegion locationRegion = MKCoordinateRegionMakeWithDistance(location2d, 10000, 10000);
     [self.mapView setRegion:locationRegion animated:YES];

@@ -24,7 +24,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+       
     }
     return self;
 }
@@ -34,17 +34,15 @@
     [super viewDidLoad];
     self.store = [LMRDataStore sharedDataStore];
     self.store.geoFenceManager = [[LMRGeoFencer alloc]init];
-    self.resultsController.delegate = self;
-    [self configureResultController];
-    [self.resultsController performFetch:nil];
-    [self.tableView reloadData];
     
+    [self configureResultController];
+    [self.tableView reloadData];
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated
+{
     [self.resultsController performFetch:nil];
     [self.tableView reloadData];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,12 +74,11 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Location *location = [self.resultsController objectAtIndexPath:indexPath];
-    
-    
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    Location *location = [self.resultsController objectAtIndexPath:indexPath];
+//    [self.store.geoFenceManager setupFenceWithLocation:location];
+//}
 
 /*
 // Override to support conditional editing of the table view.
@@ -126,10 +123,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([segue.identifier isEqualToString:@"monitorSegue"])
+    {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
-    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
-    [fencer setupFenceWithLocation:selectedLocation];
+    NSLog(@"Selected Location = %@",selectedLocation.name);
+    [self.store.geoFenceManager setupFenceWithLocation:selectedLocation];
+    }
 }
 
 
@@ -144,56 +144,8 @@
                                                                  managedObjectContext:self.store.managedObjectContext
                                                                    sectionNameKeyPath:nil
                                                                             cacheName:nil];
+    self.resultsController.delegate = self;
     [self.resultsController performFetch:nil];
 }
-
-
-
-
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Are There" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alertview show];
-    NSLog(@"EnteringXXXXXXXXXX");
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    if (locations && [locations count] && !self.store.didStartMonitoring)
-    {
-        self.store.didStartMonitoring = YES;
-        [self.store.locationManager startMonitoringForRegion:self.store.geofence];
-        //[self.store.locationManager stopUpdatingLocation];
-        [self.store.locationManager requestStateForRegion:self.store.geofence];
-    }
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    
-}
-- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
-{
-    
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-      didDetermineState:(CLRegionState)state
-              forRegion:(CLRegion *)region
-{
-    if (state == CLRegionStateInside)
-    {
-        
-        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Are There" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertview show];
-    }
-    else if (state == CLRegionStateUnknown)
-    {
-        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"Unknown" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertview show];
-    }
-}
-
 
 @end

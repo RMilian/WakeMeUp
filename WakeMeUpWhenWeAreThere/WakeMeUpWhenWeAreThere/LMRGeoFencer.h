@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "LMRDataStore.h"
+#import "Location.h"
 
-@class Location;
+//@class Location;
 
 @interface LMRGeoFencer : NSObject <CLLocationManagerDelegate,UIAlertViewDelegate>
+
+@property (strong, nonatomic) CLCircularRegion *fence;
 
 -(void)setupFenceWithLocation:(Location*)location;
 

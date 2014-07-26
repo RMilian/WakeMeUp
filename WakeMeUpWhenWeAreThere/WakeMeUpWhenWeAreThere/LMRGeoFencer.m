@@ -16,8 +16,9 @@
 @property (strong, nonatomic) LMRDataStore *store;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) Location *location;
-@property (strong, nonatomic) CLCircularRegion *fence;
+
 @property (nonatomic) BOOL didStartMonitoring;
+
 
 @end
 
@@ -27,7 +28,8 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
         self.store =[LMRDataStore sharedDataStore];
         self.locationManager = [[CLLocationManager alloc]init];
         self.location = [[Location alloc]init];
@@ -38,6 +40,7 @@
 -(void)setupFenceWithLocation:(Location*)location
 {
     self.location = location;
+
     self.didStartMonitoring = NO;
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;

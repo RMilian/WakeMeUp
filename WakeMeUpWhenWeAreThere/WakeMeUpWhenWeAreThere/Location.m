@@ -7,6 +7,7 @@
 //
 
 #import "Location.h"
+#import <EventKit/EventKit.h>
 
 
 @implementation Location
@@ -26,5 +27,6 @@
     CLCircularRegion *fence = [[CLCircularRegion alloc]initWithCenter:location2d radius:radius identifier:@"region"];
     return fence;
 }
+
 
 @end

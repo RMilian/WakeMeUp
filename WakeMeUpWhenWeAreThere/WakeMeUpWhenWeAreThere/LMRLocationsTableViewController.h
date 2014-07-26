@@ -10,7 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface LMRLocationsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate,CLLocationManagerDelegate>
-
+@interface LMRLocationsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @end
