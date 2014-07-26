@@ -7,7 +7,6 @@
 //
 
 #import "LMRDataStore.h"
-#import <CoreData/CoreData.h>
 #import "Location.h"
 
 @implementation LMRDataStore

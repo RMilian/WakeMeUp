@@ -28,7 +28,7 @@
 		717934821981312A005FE379 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 717934811981312A005FE379 /* MapKit.framework */; };
 		71AFD15D1983D63E00E5BF9C /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AFD15C1983D63E00E5BF9C /* Location.m */; };
 		71AFD15F1983E51C00E5BF9C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AFD15E1983E51C00E5BF9C /* EventKit.framework */; };
-		71E74D1A198116B800FFAF36 /* LMRGeoFencer.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D19198116B800FFAF36 /* LMRGeoFencer.m */; };
+		71AFD1621983F16E00E5BF9C /* LMRGeoFencer.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AFD1611983F16E00E5BF9C /* LMRGeoFencer.m */; };
 		71E74D1D198116CB00FFAF36 /* LMRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D1C198116CB00FFAF36 /* LMRDataStore.m */; };
 		71E74D2019811F3800FFAF36 /* LMRLocationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D1F19811F3800FFAF36 /* LMRLocationsTableViewController.m */; };
 /* End PBXBuildFile section */
@@ -72,8 +72,8 @@
 		71AFD15B1983D63E00E5BF9C /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		71AFD15C1983D63E00E5BF9C /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		71AFD15E1983E51C00E5BF9C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		71E74D18198116B800FFAF36 /* LMRGeoFencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRGeoFencer.h; sourceTree = "<group>"; };
-		71E74D19198116B800FFAF36 /* LMRGeoFencer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRGeoFencer.m; sourceTree = "<group>"; };
+		71AFD1601983F16E00E5BF9C /* LMRGeoFencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRGeoFencer.h; sourceTree = "<group>"; };
+		71AFD1611983F16E00E5BF9C /* LMRGeoFencer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRGeoFencer.m; sourceTree = "<group>"; };
 		71E74D1B198116CB00FFAF36 /* LMRDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRDataStore.h; sourceTree = "<group>"; };
 		71E74D1C198116CB00FFAF36 /* LMRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRDataStore.m; sourceTree = "<group>"; };
 		71E74D1E19811F3800FFAF36 /* LMRLocationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRLocationsTableViewController.h; sourceTree = "<group>"; };
@@ -154,13 +154,13 @@
 				71378FEA19802ACF006AAB8E /* LMRViewController.m */,
 				71E74D1E19811F3800FFAF36 /* LMRLocationsTableViewController.h */,
 				71E74D1F19811F3800FFAF36 /* LMRLocationsTableViewController.m */,
-				71E74D18198116B800FFAF36 /* LMRGeoFencer.h */,
-				71E74D19198116B800FFAF36 /* LMRGeoFencer.m */,
 				71E74D1B198116CB00FFAF36 /* LMRDataStore.h */,
 				71E74D1C198116CB00FFAF36 /* LMRDataStore.m */,
 				714A83D9198124E2006A6361 /* Model.xcdatamodeld */,
 				71AFD15B1983D63E00E5BF9C /* Location.h */,
 				71AFD15C1983D63E00E5BF9C /* Location.m */,
+				71AFD1601983F16E00E5BF9C /* LMRGeoFencer.h */,
+				71AFD1611983F16E00E5BF9C /* LMRGeoFencer.m */,
 				71378FEC19802ACF006AAB8E /* Images.xcassets */,
 				71378FDB19802ACF006AAB8E /* Supporting Files */,
 			);
@@ -304,12 +304,12 @@
 				7152640219826B1E00350360 /* LMRMonitoringViewController.m in Sources */,
 				71378FE519802ACF006AAB8E /* LMRAppDelegate.m in Sources */,
 				71E74D1D198116CB00FFAF36 /* LMRDataStore.m in Sources */,
+				71AFD1621983F16E00E5BF9C /* LMRGeoFencer.m in Sources */,
 				71378FE119802ACF006AAB8E /* main.m in Sources */,
 				714A83DB198124E2006A6361 /* Model.xcdatamodeld in Sources */,
 				71378FEB19802ACF006AAB8E /* LMRViewController.m in Sources */,
 				71AFD15D1983D63E00E5BF9C /* Location.m in Sources */,
 				71E74D2019811F3800FFAF36 /* LMRLocationsTableViewController.m in Sources */,
-				71E74D1A198116B800FFAF36 /* LMRGeoFencer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
