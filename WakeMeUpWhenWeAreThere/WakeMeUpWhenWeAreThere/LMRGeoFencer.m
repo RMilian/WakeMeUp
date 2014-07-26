@@ -9,84 +9,74 @@
 #import "LMRGeoFencer.h"
 #import "Location.h"
 #import "LMRDataStore.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface LMRGeoFencer ()
 
-//@property (strong, nonatomic) CLCircularRegion *region;
+@property (strong, nonatomic) LMRDataStore *store;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) Location *location;
+@property (strong, nonatomic) CLCircularRegion *fence;
+@property (nonatomic) BOOL didStartMonitoring;
 
 @end
 
 
 @implementation LMRGeoFencer
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.store =[LMRDataStore sharedDataStore];
+        self.locationManager = [[CLLocationManager alloc]init];
+        self.location = [[Location alloc]init];
+    }
+    return self;
+}
+
 -(void)setupFenceWithLocation:(Location*)location
 {
-    self.store = [LMRDataStore sharedDataStore];
-    self.store.didStartMonitoring = NO;
-        
-    self.store.locationManager.delegate = self;
-    self.store.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.store.locationManager startUpdatingLocation];
+    self.location = location;
+    self.didStartMonitoring = NO;
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.fence = [location createFence];
     
-    CLLocationCoordinate2D location2d = CLLocationCoordinate2DMake([location.latitude floatValue], [location.longitude floatValue]);
-    NSLog(@"distance %f",self.store.locationManager.maximumRegionMonitoringDistance);
-    NSLog(@"long/lat = %f %f",location2d.longitude, location2d.latitude);
-    
-    CLLocationDistance distance = 1000.0;
-    
-    
-    self.store.geofence = [[CLCircularRegion alloc]initWithCenter:location2d radius:distance identifier:@"region"];
-    NSLog(@"store long/lat = %f  %f",self.store.geofence.center.longitude, self.store.geofence.center.latitude);
-    
-    if(![CLLocationManager locationServicesEnabled])
-    {
-        //You need to enable Location Services
-        NSLog(@"Location Services not Enabled");
-    }
-    if(![CLLocationManager isMonitoringAvailableForClass:[self.store.geofence class]])
-    {
-        //Region monitoring is not available for this Class;
-        NSLog(@"Region monitoring not available not Enabled");
-    }
-    if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
-       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted  )
-    {
-        NSLog(@"App Not Authorized");
-        //You need to authorize Location Services for the APP
-    }
-    
-    [self.store.locationManager startMonitoringForRegion:self.store.geofence];
-
-    [self.store.locationManager requestStateForRegion:self.store.geofence];
-    NSLog(@"break");
+    [self.locationManager startUpdatingLocation];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
-    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Are There" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alertview show];
-    NSLog(@"EnteringXXXXXXXXXX");
+    [self youHaveArrivedAlert];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{   
-    if (locations && [locations count] && !self.store.didStartMonitoring)
+{
+    NSLog(@"You have updated location");
+    if (locations && [locations count] && !self.didStartMonitoring)
     {
-         self.store.didStartMonitoring = YES;
-        [self.store.locationManager startMonitoringForRegion:self.store.geofence];
-        //[self.store.locationManager stopUpdatingLocation];
-        [self.store.locationManager requestStateForRegion:self.store.geofence];
+        NSLog(@"You have updated location and started monitoring");
+        self.didStartMonitoring = YES;
+        [self.locationManager startMonitoringForRegion:self.fence];
+        [self.locationManager requestStateForRegion:self.fence];
     }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [self errorAlertViewWithError:error];
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
-    
+    NSLog(@"You Have Exited The Region");
 }
+
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
-    
+    NSLog(@"You Have Started Monitoring");
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -95,15 +85,53 @@
 {
     if (state == CLRegionStateInside)
     {
-        
-        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Are There" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertview show];
+        [self youHaveArrivedAlert];
     }
     else if (state == CLRegionStateUnknown)
     {
-        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"Unknown" message:@"Fucker" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertview show];
+        
+        NSDictionary *errorDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:@"Can Not Determine Location", NSLocalizedDescriptionKey, nil];
+        NSError *error = [[NSError alloc]initWithDomain:@"manual error" code:400 userInfo:errorDictionary];
+        [self errorAlertViewWithError:error];
     }
+}
+
+-(void)youHaveArrivedAlert
+{
+    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Have Arrived At" message:self.location.name delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertview show];
+}
+
+-(void)errorAlertViewWithError:(NSError*)error
+{
+    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Retry", nil];
+
+    [alertview show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([alertView.title isEqualToString:@"You Have Arrived At"])
+    {
+        [self.locationManager stopMonitoringForRegion:self.fence];
+        [self.locationManager stopUpdatingLocation];
+    }
+    else if ([alertView.title isEqualToString:@"Error"])
+    {
+        if (buttonIndex == 0)
+        {
+            [self.locationManager stopMonitoringForRegion:self.fence];
+            [self.locationManager stopUpdatingLocation];
+        }
+        else if (buttonIndex == 2)
+        {
+            [self.locationManager startUpdatingLocation];
+            [self.locationManager startMonitoringForRegion:self.fence];
+            [self.locationManager requestStateForRegion:self.fence];
+        }
+    }
+    
+    
 }
 
 @end

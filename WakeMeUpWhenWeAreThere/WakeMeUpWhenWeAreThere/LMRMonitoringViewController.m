@@ -16,9 +16,6 @@
 - (IBAction)testButtonTapped:(id)sender;
 
 
-
-
-
 @end
 
 @implementation LMRMonitoringViewController
@@ -36,6 +33,7 @@
 {
     [super viewDidLoad];
     self.store = [LMRDataStore sharedDataStore];
+    self.store.locationManager = [[CLLocationManager alloc]init];
     self.locationLabel.text = [NSString stringWithFormat:@"LOC- %f  %f",self.store.geofence.center.longitude,self.store.geofence.center.latitude];
     self.myLocationLabel.text = [NSString stringWithFormat:@"myLOC- %f  %f",self.store.locationManager.location.coordinate.longitude,self.store.locationManager.location.coordinate.latitude];
     // Do any additional setup after loading the view.

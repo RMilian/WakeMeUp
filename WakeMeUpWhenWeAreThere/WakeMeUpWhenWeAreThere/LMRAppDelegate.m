@@ -13,9 +13,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+
     self.store = [LMRDataStore sharedDataStore];
-    self.store.locationManager = [[CLLocationManager alloc]init];
+
     if(![CLLocationManager locationServicesEnabled])
     {
         //You need to enable Location Services

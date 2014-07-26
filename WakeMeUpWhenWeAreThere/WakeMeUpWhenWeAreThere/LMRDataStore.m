@@ -73,19 +73,21 @@
 -(void)addLocationWithName:(NSString*)name
              StreetAddress:(NSString*)streetAddress
                       City:(NSString*)city
-                   Country:(NSString*)country
+                   Zipcode:(NSString*)zipCode
                   Latitude:(float)latitude
                  Longitude:(float)longitude
+                    Radius:(NSNumber *)radius
 {
     Location *newLocation = [NSEntityDescription insertNewObjectForEntityForName:@"Location"
-                                                        inManagedObjectContext:self.managedObjectContext];
+                                                          inManagedObjectContext:self.managedObjectContext];
     
     newLocation.name = name;
     newLocation.streetAddress = streetAddress;
     newLocation.city = city;
-    newLocation.country = country;
+    newLocation.zipCode = zipCode;
     newLocation.latitude = [NSNumber numberWithFloat:latitude];
     newLocation.longitude = [NSNumber numberWithFloat:longitude];
+    newLocation.fenceRadius = radius;
     
     [self save];
 }

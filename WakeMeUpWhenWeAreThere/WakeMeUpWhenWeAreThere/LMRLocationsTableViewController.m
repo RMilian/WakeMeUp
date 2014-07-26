@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
     self.store = [LMRDataStore sharedDataStore];
+    self.store.geoFenceManager = [[LMRGeoFencer alloc]init];
     self.resultsController.delegate = self;
     [self configureResultController];
     [self.resultsController performFetch:nil];
@@ -55,7 +56,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     return 1;
 }
 
@@ -79,46 +79,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Location *location = [self.resultsController objectAtIndexPath:indexPath];
-//    LMRGeoFencer *fencer = [[LMRGeoFencer alloc]init];
-//    [fencer setupFenceWithLocation:selectedLocation];
-    self.store = [LMRDataStore sharedDataStore];
-    self.store.didStartMonitoring = NO;
     
-    self.store.locationManager.delegate = self;
-    self.store.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.store.locationManager startUpdatingLocation];
-    
-    CLLocationCoordinate2D location2d = CLLocationCoordinate2DMake([location.latitude floatValue], [location.longitude floatValue]);
-    NSLog(@"distance %f",self.store.locationManager.maximumRegionMonitoringDistance);
-    NSLog(@"long/lat = %f %f",location2d.longitude, location2d.latitude);
-    
-    CLLocationDistance distance = 1000.0;
-    
-    
-    self.store.geofence = [[CLCircularRegion alloc]initWithCenter:location2d radius:distance identifier:@"region"];
-    NSLog(@"store long/lat = %f  %f",self.store.geofence.center.longitude, self.store.geofence.center.latitude);
-    
-    if(![CLLocationManager locationServicesEnabled])
-    {
-        //You need to enable Location Services
-        NSLog(@"Location Services not Enabled");
-    }
-    if(![CLLocationManager isMonitoringAvailableForClass:[self.store.geofence class]])
-    {
-        //Region monitoring is not available for this Class;
-        NSLog(@"Region monitoring not available not Enabled");
-    }
-    if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
-       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted  )
-    {
-        NSLog(@"App Not Authorized");
-        //You need to authorize Location Services for the APP
-    }
-    
-    [self.store.locationManager startMonitoringForRegion:self.store.geofence];
-    
-    [self.store.locationManager requestStateForRegion:self.store.geofence];
-
     
 }
 
@@ -163,7 +124,6 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];

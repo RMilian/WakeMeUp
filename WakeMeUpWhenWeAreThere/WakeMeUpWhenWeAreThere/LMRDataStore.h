@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LMRGeoFencer.h"
 
 @interface LMRDataStore : NSObject
 
+@property (strong, nonatomic) LMRGeoFencer *geoFenceManager;
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLCircularRegion *geofence;
-@property (nonatomic) BOOL didStartMonitoring;
+
 
 + (instancetype) sharedDataStore;
 - (void)save;
@@ -22,7 +22,8 @@
 -(void)addLocationWithName:(NSString*)name
              StreetAddress:(NSString*)streetAddress
                       City:(NSString*)city
-                   Country:(NSString*)country
+                   ZipCode:(NSString*)zipCode
                   Latitude:(float)latitude
-                 Longitude:(float)longitude;
+                 Longitude:(float)longitude
+                    Radius:(NSNumber*)radius;
 @end

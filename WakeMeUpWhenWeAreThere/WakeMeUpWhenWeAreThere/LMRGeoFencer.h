@@ -12,10 +12,7 @@
 
 @class Location;
 
-@interface LMRGeoFencer : NSObject <CLLocationManagerDelegate>
-
-
-@property (strong, nonatomic) LMRDataStore *store;
+@interface LMRGeoFencer : NSObject <CLLocationManagerDelegate,UIAlertViewDelegate>
 
 -(void)setupFenceWithLocation:(Location*)location;
 
