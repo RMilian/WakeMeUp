@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class LMRDataStore;
+@class Location;
 
-@interface LMRMonitoringViewController : UIViewController
+@interface LMRMonitoringViewController : UIViewController <UIAlertViewDelegate>
 
 @property (strong, nonatomic) LMRDataStore *store;
+@property (strong, nonatomic) Location *location;
 
 @end

@@ -12,13 +12,11 @@
 
 @interface LMRViewController ()
 
-
 @property (strong, nonatomic) LMRDataStore *store;
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic) float latitude;
 @property (nonatomic) float longitude;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UITextField *streetField;
@@ -71,7 +69,6 @@ if (!self.geocoder)
             self.latitude = coordinate.latitude;
             self.longitude = coordinate.longitude;
             [self displayLocation];
-            
         }
     }];
     [self resignFirstResponder];

@@ -10,6 +10,7 @@
 #import "LMRDataStore.h"
 #import "Location.h"
 #import "LMRGeoFencer.h"
+#import "LMRMonitoringViewController.h"
 
 @interface LMRLocationsTableViewController ()
 
@@ -33,16 +34,17 @@
 {
     [super viewDidLoad];
     self.store = [LMRDataStore sharedDataStore];
-    self.store.geoFenceManager = [[LMRGeoFencer alloc]init];
-    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
     [self configureResultController];
-    [self.tableView reloadData];
+    [self.resultsController performFetch:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self.resultsController performFetch:nil];
-    [self.tableView reloadData];
+     [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,10 +127,10 @@
 {
     if ([segue.identifier isEqualToString:@"monitorSegue"])
     {
+    LMRMonitoringViewController *nextVC = segue.destinationViewController;
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     Location *selectedLocation = [self.resultsController objectAtIndexPath:indexPath];
-    NSLog(@"Selected Location = %@",selectedLocation.name);
-    [self.store.geoFenceManager setupFenceWithLocation:selectedLocation];
+    nextVC.location = selectedLocation;
     }
 }
 

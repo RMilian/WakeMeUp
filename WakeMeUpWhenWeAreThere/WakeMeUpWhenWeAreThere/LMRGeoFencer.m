@@ -10,15 +10,13 @@
 #import "Location.h"
 #import "LMRDataStore.h"
 #import <CoreLocation/CoreLocation.h>
+#import "LMRMonitoringViewController.h"
 
 @interface LMRGeoFencer ()
 
 @property (strong, nonatomic) LMRDataStore *store;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) Location *location;
 
-@property (nonatomic) BOOL didStartMonitoring;
-
+@property (nonatomic) BOOL didEnterRegion;
 
 @end
 
@@ -32,7 +30,6 @@
     {
         self.store =[LMRDataStore sharedDataStore];
         self.locationManager = [[CLLocationManager alloc]init];
-        self.location = [[Location alloc]init];
     }
     return self;
 }
@@ -40,31 +37,32 @@
 -(void)setupFenceWithLocation:(Location*)location
 {
     self.location = location;
-
-    self.didStartMonitoring = NO;
+    self.didAlert = NO;
+    self.didEnterRegion = NO;
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.fence = [location createFence];
-    
     [self.locationManager startUpdatingLocation];
-}
-
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    [self youHaveArrivedAlert];
+    [self.locationManager startMonitoringForRegion:self.fence];
+    [self.locationManager requestStateForRegion:self.fence];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"You have updated location");
-    if (locations && [locations count] && !self.didStartMonitoring)
+    if (locations && [locations count] && !self.didEnterRegion)
     {
-        NSLog(@"You have updated location and started monitoring");
-        self.didStartMonitoring = YES;
-        [self.locationManager startMonitoringForRegion:self.fence];
         [self.locationManager requestStateForRegion:self.fence];
     }
 }
+
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    self.didEnterRegion = YES;
+    [self youHaveArrivedAlert];
+    [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopMonitoringForRegion:self.fence];
+}
+
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
@@ -92,7 +90,6 @@
     }
     else if (state == CLRegionStateUnknown)
     {
-        
         NSDictionary *errorDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:@"Can Not Determine Location", NSLocalizedDescriptionKey, nil];
         NSError *error = [[NSError alloc]initWithDomain:@"manual error" code:400 userInfo:errorDictionary];
         [self errorAlertViewWithError:error];
@@ -101,40 +98,28 @@
 
 -(void)youHaveArrivedAlert
 {
-    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"You Have Arrived At" message:self.location.name delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alertview show];
+
+    if (!self.didAlert)
+    {
+        self.didAlert = YES;
+        self.store.alertView.title = @"You Have Arrived";
+        [self.store.alertView addButtonWithTitle:@"OK"];
+        [self.store.alertView show];
+    }
 }
 
 -(void)errorAlertViewWithError:(NSError*)error
 {
-    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Retry", nil];
 
-    [alertview show];
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if ([alertView.title isEqualToString:@"You Have Arrived At"])
+    if (!self.didAlert)
     {
-        [self.locationManager stopMonitoringForRegion:self.fence];
-        [self.locationManager stopUpdatingLocation];
+        self.didAlert = YES;
+        self.store.alertView.title = @"Error";
+        self.store.alertView.message = [NSString stringWithFormat:@"%@",error.localizedDescription];
+        [self.store.alertView addButtonWithTitle:@"Cancel"];
+        [self.store.alertView addButtonWithTitle:@"Retry"];
+        [self.store.alertView show];
     }
-    else if ([alertView.title isEqualToString:@"Error"])
-    {
-        if (buttonIndex == 0)
-        {
-            [self.locationManager stopMonitoringForRegion:self.fence];
-            [self.locationManager stopUpdatingLocation];
-        }
-        else if (buttonIndex == 2)
-        {
-            [self.locationManager startUpdatingLocation];
-            [self.locationManager startMonitoringForRegion:self.fence];
-            [self.locationManager requestStateForRegion:self.fence];
-        }
-    }
-    
-    
 }
 
 @end

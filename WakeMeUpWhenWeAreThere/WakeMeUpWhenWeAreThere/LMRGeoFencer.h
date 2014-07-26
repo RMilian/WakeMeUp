@@ -14,6 +14,9 @@
 @interface LMRGeoFencer : NSObject <CLLocationManagerDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) CLCircularRegion *fence;
+@property (strong, nonatomic) Location *location;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) BOOL didAlert;
 
 -(void)setupFenceWithLocation:(Location*)location;
 

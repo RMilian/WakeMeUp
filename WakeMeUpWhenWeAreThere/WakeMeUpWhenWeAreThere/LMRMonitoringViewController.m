@@ -21,8 +21,9 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+
     }
     return self;
 }
@@ -31,27 +32,67 @@
 {
     [super viewDidLoad];
     self.store = [LMRDataStore sharedDataStore];
-    
-    self.myLocationLabel.text = [NSString stringWithFormat:@"LOC- %f  %f",self.store.geoFenceManager.fence.center.longitude,self.store.geoFenceManager.fence.center.latitude];
-
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(void)viewWillAppear:(BOOL)animated
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.store.geoFenceManager = [[LMRGeoFencer alloc]init];
+    self.store.alertView = [[UIAlertView alloc]init];
+    self.store.alertView.delegate = self;
+    [self.store.geoFenceManager setupFenceWithLocation:self.location];
 }
-*/
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+    self.myLocationLabel.text = [NSString stringWithFormat:@"LOC- %f  %f",self.store.geoFenceManager.fence.center.longitude,self.store.geoFenceManager.fence.center.latitude];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([alertView.title isEqualToString:@"You Have Arrived"])
+    {
+        NSLog(@"Arrived---------");
+        [self.store.geoFenceManager.locationManager stopMonitoringForRegion:self.store.geoFenceManager.fence];
+        [self.store.geoFenceManager.locationManager stopUpdatingLocation];
+        [self.store.alertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.store.geoFenceManager.didAlert = NO;
+        [self dismissViewControllerAnimated:YES completion:^{
+           
+        }];
+    }
+    else if ([alertView.title isEqualToString:@"Error"])
+    {
+        if (buttonIndex == 0)
+        {
+            NSLog(@"Error Cancel---------");
+            [self.store.geoFenceManager.locationManager stopMonitoringForRegion:self.store.geoFenceManager.fence];
+            [self.store.geoFenceManager.locationManager stopUpdatingLocation];
+            [self.store.alertView dismissWithClickedButtonIndex:0 animated:NO];
+            self.store.geoFenceManager.didAlert = NO;
+            [self dismissViewControllerAnimated:YES completion:^{
+               
+            }];
+        }
+        else if (buttonIndex == 1)
+        {
+            NSLog(@"Error Retry---------");
+            [self.store.geoFenceManager.locationManager startUpdatingLocation];
+            [self.store.geoFenceManager.locationManager startMonitoringForRegion:self.store.geoFenceManager.fence];
+            [self.store.geoFenceManager.locationManager requestStateForRegion:self.store.geoFenceManager.fence];
+            [self.store.alertView dismissWithClickedButtonIndex:1 animated:NO];
+            self.store.geoFenceManager.didAlert = NO;
+            self.store.alertView = [[UIAlertView alloc]init];
+            self.store.alertView.delegate = self;
+        }
+    }
+}
 
 - (IBAction)testButtonTapped:(id)sender {
     NSLog(@"Test Button Tapped");
