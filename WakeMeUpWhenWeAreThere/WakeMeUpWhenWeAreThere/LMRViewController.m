@@ -48,42 +48,82 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)fetchCoordinates:(id)sender{
-if (!self.geocoder)
-    {
-    self.geocoder = [[CLGeocoder alloc] init];
-    }
-    NSString *address = [NSString stringWithFormat:@"%@ %@ %@", self.streetField.text, self.cityField.text, self.zipCodeField.text];
-    
-    [self.geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error)NSLog(@"Error = %@",error.localizedDescription);
-        if ([placemarks count] > 0)
-        {
-            CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            CLLocation *location = placemark.location;
-            CLLocationCoordinate2D coordinate = location.coordinate;
-            
-            self.latitude = coordinate.latitude;
-            self.longitude = coordinate.longitude;
-            [self displayLocation];
-        }
-    }];
     [self resignFirstResponder];
+    [self findLocationWithCompletion:^void(BOOL found)
+    {
+    if (!found)
+    {
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Can't Find Location"
+                                                       message:@"Please Re-enter"
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil, nil];
+    [alertView show];
+    }
+    else
+    {
+    [self displayLocation];
+    }
+    }];
 }
 
 - (IBAction)saveButtonTapped:(id)sender
 {
-    
-    [self.store addLocationWithName:self.nameField.text
-                      StreetAddress:self.streetField.text
-                               City:self.cityField.text
-                            Zipcode:self.zipCodeField.text
-                           Latitude:self.latitude
-                          Longitude:self.longitude Radius:@100];
+    [self resignFirstResponder];
+    [self findLocationWithCompletion:^(BOOL found)
+    {
+        if (found)
+        {
+            [self.store addLocationWithName:self.nameField.text
+                              StreetAddress:self.streetField.text
+                                       City:self.cityField.text
+                                    Zipcode:self.zipCodeField.text
+                                   Latitude:self.latitude
+                                  Longitude:self.longitude Radius:@100];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Can't Find Location"
+                                                               message:@"Please Re-enter"
+                                                              delegate:self
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }];
 }
+
+
+
+-(void)findLocationWithCompletion:(void (^)(BOOL))findCompletion
+{
+    if (!self.geocoder)
+    {
+        self.geocoder = [[CLGeocoder alloc] init];
+    }
+    NSString *address = [NSString stringWithFormat:@"%@ %@ %@", self.streetField.text, self.cityField.text, self.zipCodeField.text];
+
+    [self.geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (error)
+        {
+            findCompletion(NO);
+        }
+        if ([placemarks count] > 0)
+        {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            self.latitude = placemark.location.coordinate.latitude;
+            self.longitude = placemark.location.coordinate.longitude;
+            findCompletion(YES);
+        }
+    }];
+}
+
+
 
 -(void)displayLocation
 {
