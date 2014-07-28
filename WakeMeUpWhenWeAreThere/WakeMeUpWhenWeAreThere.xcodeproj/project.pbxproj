@@ -29,6 +29,8 @@
 		71AFD15D1983D63E00E5BF9C /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AFD15C1983D63E00E5BF9C /* Location.m */; };
 		71AFD15F1983E51C00E5BF9C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AFD15E1983E51C00E5BF9C /* EventKit.framework */; };
 		71AFD1621983F16E00E5BF9C /* LMRGeoFencer.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AFD1611983F16E00E5BF9C /* LMRGeoFencer.m */; };
+		71AFD16619856B9000E5BF9C /* LMRNotAuthorizedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AFD16419856B9000E5BF9C /* LMRNotAuthorizedViewController.m */; };
+		71AFD16719856B9000E5BF9C /* LMRNotAuthorizedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71AFD16519856B9000E5BF9C /* LMRNotAuthorizedViewController.xib */; };
 		71E74D1D198116CB00FFAF36 /* LMRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D1C198116CB00FFAF36 /* LMRDataStore.m */; };
 		71E74D2019811F3800FFAF36 /* LMRLocationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E74D1F19811F3800FFAF36 /* LMRLocationsTableViewController.m */; };
 /* End PBXBuildFile section */
@@ -74,6 +76,9 @@
 		71AFD15E1983E51C00E5BF9C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		71AFD1601983F16E00E5BF9C /* LMRGeoFencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRGeoFencer.h; sourceTree = "<group>"; };
 		71AFD1611983F16E00E5BF9C /* LMRGeoFencer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRGeoFencer.m; sourceTree = "<group>"; };
+		71AFD16319856B9000E5BF9C /* LMRNotAuthorizedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRNotAuthorizedViewController.h; sourceTree = "<group>"; };
+		71AFD16419856B9000E5BF9C /* LMRNotAuthorizedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRNotAuthorizedViewController.m; sourceTree = "<group>"; };
+		71AFD16519856B9000E5BF9C /* LMRNotAuthorizedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LMRNotAuthorizedViewController.xib; sourceTree = "<group>"; };
 		71E74D1B198116CB00FFAF36 /* LMRDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRDataStore.h; sourceTree = "<group>"; };
 		71E74D1C198116CB00FFAF36 /* LMRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMRDataStore.m; sourceTree = "<group>"; };
 		71E74D1E19811F3800FFAF36 /* LMRLocationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMRLocationsTableViewController.h; sourceTree = "<group>"; };
@@ -154,6 +159,9 @@
 				71378FEA19802ACF006AAB8E /* LMRViewController.m */,
 				71E74D1E19811F3800FFAF36 /* LMRLocationsTableViewController.h */,
 				71E74D1F19811F3800FFAF36 /* LMRLocationsTableViewController.m */,
+				71AFD16319856B9000E5BF9C /* LMRNotAuthorizedViewController.h */,
+				71AFD16419856B9000E5BF9C /* LMRNotAuthorizedViewController.m */,
+				71AFD16519856B9000E5BF9C /* LMRNotAuthorizedViewController.xib */,
 				71E74D1B198116CB00FFAF36 /* LMRDataStore.h */,
 				71E74D1C198116CB00FFAF36 /* LMRDataStore.m */,
 				714A83D9198124E2006A6361 /* Model.xcdatamodeld */,
@@ -281,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71378FED19802ACF006AAB8E /* Images.xcassets in Resources */,
+				71AFD16719856B9000E5BF9C /* LMRNotAuthorizedViewController.xib in Resources */,
 				71378FDF19802ACF006AAB8E /* InfoPlist.strings in Resources */,
 				71378FE819802ACF006AAB8E /* Main.storyboard in Resources */,
 			);
@@ -307,6 +316,7 @@
 				71AFD1621983F16E00E5BF9C /* LMRGeoFencer.m in Sources */,
 				71378FE119802ACF006AAB8E /* main.m in Sources */,
 				714A83DB198124E2006A6361 /* Model.xcdatamodeld in Sources */,
+				71AFD16619856B9000E5BF9C /* LMRNotAuthorizedViewController.m in Sources */,
 				71378FEB19802ACF006AAB8E /* LMRViewController.m in Sources */,
 				71AFD15D1983D63E00E5BF9C /* Location.m in Sources */,
 				71E74D2019811F3800FFAF36 /* LMRLocationsTableViewController.m in Sources */,

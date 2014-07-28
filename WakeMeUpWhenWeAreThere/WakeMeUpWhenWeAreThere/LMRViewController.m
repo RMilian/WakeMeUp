@@ -124,7 +124,6 @@
 }
 
 
-
 -(void)displayLocation
 {
     [self.view endEditing:YES];

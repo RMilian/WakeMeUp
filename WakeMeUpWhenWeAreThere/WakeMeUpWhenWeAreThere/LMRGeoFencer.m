@@ -30,18 +30,22 @@
     {
         self.store =[LMRDataStore sharedDataStore];
         self.locationManager = [[CLLocationManager alloc]init];
+        self.eventStore = [[EKEventStore alloc]init];
     }
     return self;
 }
 
 -(void)setupFenceWithLocation:(Location*)location
 {
+    self.reminder = [[EKReminder alloc]init];
+    self.eventStore = [[EKEventStore alloc]init];
     self.location = location;
     self.didAlert = NO;
     self.didEnterRegion = NO;
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.fence = [location createFence];
+    self.alarm = [location createAlarm];
     [self.locationManager startUpdatingLocation];
     [self.locationManager startMonitoringForRegion:self.fence];
     [self.locationManager requestStateForRegion:self.fence];
@@ -101,6 +105,13 @@
 
     if (!self.didAlert)
     {
+        
+//        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        LMRMonitoringViewController *monitorVC = (LMRMonitoringViewController*)[sb instantiateViewControllerWithIdentifier:@"monitorVC"];
+//        
+//        self.didAlert = YES;
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"You Have Arrived" message:nil delegate:monitorVC cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        
         self.didAlert = YES;
         self.store.alertView.title = @"You Have Arrived";
         [self.store.alertView addButtonWithTitle:@"OK"];

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
+#import <EventKit/EventKit.h>
 
-@interface LMRLocationsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface LMRLocationsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, CLLocationManagerDelegate>
 
 @end

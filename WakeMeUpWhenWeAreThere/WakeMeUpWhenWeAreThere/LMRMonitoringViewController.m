@@ -61,7 +61,7 @@
         NSLog(@"Arrived---------");
         [self.store.geoFenceManager.locationManager stopMonitoringForRegion:self.store.geoFenceManager.fence];
         [self.store.geoFenceManager.locationManager stopUpdatingLocation];
-        [self.store.alertView dismissWithClickedButtonIndex:0 animated:YES];
+        [alertView dismissWithClickedButtonIndex:0 animated:YES];
         self.store.geoFenceManager.didAlert = NO;
         [self dismissViewControllerAnimated:YES completion:^{
            
@@ -74,7 +74,7 @@
             NSLog(@"Error Cancel---------");
             [self.store.geoFenceManager.locationManager stopMonitoringForRegion:self.store.geoFenceManager.fence];
             [self.store.geoFenceManager.locationManager stopUpdatingLocation];
-            [self.store.alertView dismissWithClickedButtonIndex:0 animated:NO];
+            [alertView dismissWithClickedButtonIndex:0 animated:NO];
             self.store.geoFenceManager.didAlert = NO;
             [self dismissViewControllerAnimated:YES completion:^{
                

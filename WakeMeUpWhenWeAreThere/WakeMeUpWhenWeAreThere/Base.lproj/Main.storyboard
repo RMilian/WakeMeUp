@@ -45,7 +45,7 @@
         <!--Monitoring View Controller-->
         <scene sceneID="VcF-z9-TfY">
             <objects>
-                <viewController id="drz-pD-YHP" customClass="LMRMonitoringViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="monitorVC" id="drz-pD-YHP" customClass="LMRMonitoringViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EbJ-QV-FaI"/>
                         <viewControllerLayoutGuide type="bottom" id="YYc-Ne-nSN"/>

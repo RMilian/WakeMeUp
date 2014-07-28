@@ -7,7 +7,7 @@
 //
 
 #import "Location.h"
-#import <EventKit/EventKit.h>
+
 
 
 @implementation Location
@@ -26,6 +26,23 @@
     CLLocationDistance radius = [self.fenceRadius floatValue];
     CLCircularRegion *fence = [[CLCircularRegion alloc]initWithCenter:location2d radius:radius identifier:@"region"];
     return fence;
+}
+
+-(EKStructuredLocation*)createStructuredLocation
+{
+    EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:@"structuredLocation"];
+    CLLocation *locationForStructLoc = [[CLLocation alloc]initWithLatitude:[self.longitude floatValue] longitude:[self.latitude floatValue]];
+    structuredLocation.geoLocation = locationForStructLoc;
+    structuredLocation.radius = [self.fenceRadius floatValue];
+    return structuredLocation;
+}
+
+-(EKAlarm*)createAlarm
+{
+    EKAlarm *alarm = [[EKAlarm alloc]init];
+    alarm.proximity = EKAlarmProximityEnter;
+    alarm.structuredLocation = [self createStructuredLocation];
+    return alarm;
 }
 
 

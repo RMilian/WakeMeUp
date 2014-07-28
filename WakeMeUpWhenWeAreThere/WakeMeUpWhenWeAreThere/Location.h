@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import <EventKit/EventKit.h>
 
 @interface Location : NSManagedObject
 
@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSNumber * fenceRadius;
 
 -(CLCircularRegion*)createFence;
+-(EKAlarm*)createAlarm;
 
 @end

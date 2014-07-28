@@ -18,6 +18,7 @@
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) LMRGeoFencer *geoFenceManager;
 @property (strong, nonatomic) UIAlertView *alertView;
+@property (nonatomic) BOOL authorized;
 
 
 + (instancetype) sharedDataStore;

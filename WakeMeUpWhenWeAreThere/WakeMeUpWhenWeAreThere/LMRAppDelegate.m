@@ -9,30 +9,42 @@
 #import "LMRAppDelegate.h"
 #import "LMRDataStore.h"
 
-@implementation LMRAppDelegate
+@implementation LMRAppDelegate 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-    self.store = [LMRDataStore sharedDataStore];
+//    self.store = [LMRDataStore sharedDataStore];
+//
+//    if(![CLLocationManager locationServicesEnabled])
+//    {
+//        //You need to enable Location Services
+//        NSLog(@"Location Services not Enabled");
+//    }
+//    if(![CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]])
+//    {
+//        //Region monitoring is not available for this Class;
+//        NSLog(@"Region monitoring not available not Enabled");
+//    }
+//    
+//    if (!([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
+//        NSLog(@"App Not Authorized %u",[CLLocationManager authorizationStatus]);
+//        CLLocationManager *tempLM = [[CLLocationManager alloc]init];
+//        tempLM.delegate = self;
+//        id temp = tempLM.location;
+//        [tempLM startUpdatingLocation];
+//    }
+//    
+//    if (!([EKEventStore authorizationStatusForEntityType:EKEntityTypeReminder] == EKAuthorizationStatusAuthorized)) {
+//        NSLog(@"Reminder Services not Enabled");
+//        EKEventStore *tempEventStore = [[EKEventStore alloc]init];
+//        [tempEventStore requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
+//            
+//        }];
+//    }
 
-    if(![CLLocationManager locationServicesEnabled])
-    {
-        //You need to enable Location Services
-        NSLog(@"Location Services not Enabled");
-    }
-    if(![CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]])
-    {
-        //Region monitoring is not available for this Class;
-        NSLog(@"Region monitoring not available not Enabled");
-    }
-    if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
-       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted  )
-    {
-        NSLog(@"App Not Authorized");
-        //You need to authorize Location Services for the APP
-    }
 
+    
     return YES;
 }
 							

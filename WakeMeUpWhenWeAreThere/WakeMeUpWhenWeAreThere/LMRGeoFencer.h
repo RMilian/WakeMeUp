@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <EventKit/EventKit.h>
 
 @class Location;
 
@@ -15,6 +16,9 @@
 
 @property (strong, nonatomic) CLCircularRegion *fence;
 @property (strong, nonatomic) Location *location;
+@property (strong, nonatomic) EKAlarm *alarm;
+@property (strong, nonatomic) EKReminder *reminder;
+@property (strong, nonatomic) EKEventStore *eventStore;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) BOOL didAlert;
 
